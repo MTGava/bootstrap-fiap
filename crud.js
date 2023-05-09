@@ -3,30 +3,38 @@ document.querySelector("#salvar").addEventListener("click", cadastrar)
 function cadastrar() {
     let titulo = document.querySelector("#titulo").value
     let descricao = document.querySelector("#descricao").value
-    let pontos = document.querySelector("#pontos").value
+    let preco = document.querySelector("#preco").value
     let categoria = document.querySelector("#categoria").value
+    let data = document.querySelector("#data").value
+    let parcelada = document.querySelector("#parcelada").checked
+    let parcelas = document.querySelector("#parcelas").value
 
-    const tarefa = {
+    const compra = {
         titulo: titulo,
         descricao: descricao,
-        pontos: pontos,
-        categoria: categoria
+        preco: preco,
+        categoria: categoria,
+        data: data,
+        parcelada: parcelada,
+        parcelas: parcelas
     }
 
-    document.querySelector("#tarefas").innerHTML += gerarCard(tarefa)
+    document.querySelector("#compras").innerHTML += gerarCard(compra)
 }
 
-function gerarCard(tarefa) {
+function gerarCard(compra) {
     return `<div class="col-lg-3 col-md-6 col-12">
     <div class="card">
-      <div class="card-header">${tarefa.titulo}</div>
+      <div class="card-header">${compra.titulo}</div>
       <div class="card-body">
-        <p class="card-text">${tarefa.descricao}</p>
+        <p class="card-text">${compra.descricao}</p>
+        <p class="card-text">${compra.data}</p>
+        <p class="card-text">Preço R$${compra.preco && compra.preco > 0 ? compra.preco : 0}</span></p>
         <p>
-          <span class="badge text-bg-warning">${tarefa.categoria}</span>
+          <span class="badge text-bg-info">${compra.parcelada != false && compra.parcelas > 1 ? compra.parcelas + " parcelas" : "Não parcelada"}</span>
         </p>
         <p>
-            <span class="badge rounded-pill text-bg-info">Preço R$${tarefa.pontos && tarefa.pontos > 0 ? tarefa.pontos : 0}</span>
+          <span class="badge text-bg-warning">${compra.categoria}</span>
         </p>
         <a href="#" class="btn btn-success">
           <i class="bi bi-check-lg"></i>
@@ -49,4 +57,13 @@ document.querySelector('#btnSwitch').addEventListener('click',()=>{
         document.documentElement.setAttribute('data-bs-theme','dark')
         document.querySelector('#btnSwitch').innerHTML = '<i class="bi bi-brightness-high-fill"></i>'
     }
+})
+
+
+document.querySelector('#parcelada').addEventListener('click',()=> {
+  if (document.querySelector('#parcelada').checked == false) {
+    document.querySelector('#parcelas').setAttribute("disabled","disabled")
+  } else {
+    document.querySelector('#parcelas').removeAttribute("disabled")
+  }
 })

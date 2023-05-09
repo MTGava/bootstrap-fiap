@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-bs-theme="light">
+<html lang="pt-BR" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -31,7 +31,7 @@
                   <a class="dropdown-item" href="#">Pendentes</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#">Concluidas</a>
+                  <a class="dropdown-item" href="#">Realizadas</a>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
@@ -46,17 +46,17 @@
             <input class="form-control me-2" type="search" placeholder="Digite algo..." aria-label="buscar" />
             <button class="btn btn-outline-success" type="submit"> Buscar </button>
           </form>
-          <button class="btn btn-dark shadow ms-2" id="btnSwitch"><i class="bi bi-moon-fill"></i></button>
+          <button class="btn btn-dark shadow ms-2" id="btnSwitch"><i class="bi bi-brightness-high-fill"></i></button>
         </div>
       </div>
     </nav>
 
     <div class="container">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar Compra</button>
+      <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar Compra</button>
     </div>
     
     <div class="container">
-      <div id="tarefas" class="row mt-3">
+      <div id="compras" class="row mt-3">
       </div>
     </div>
     <!-- Button trigger modal -->
@@ -77,16 +77,35 @@
               <div class="mb-3">
                 <input id="descricao" type="text" class="form-control" placeholder="Descrição" aria-label="Descrição" />
               </div>
+              <div class="mb-3">
+                <input id="data" type="date" class="form-control" />
+              </div>
               <div class="col-6">
-                <input id="pontos" type="number" class="form-control" placeholder="Preço" aria-label="preco" />
+                <div class="form-check">
+                  <input id="parcelada" type="checkbox" class="form-check-input"/>
+                  <label for="parcelada" class="form-check-label">
+                    Parcelada
+                  </label>
+                </div>
+              </div>
+              <div class="col-6 mb-2">
+                <input id="parcelas" type="number" class="form-control" placeholder="Parcelas" aria-label="parcelas" disabled/>
+              </div>
+              <div class="col-6">
+                <input id="preco" type="number" class="form-control" placeholder="Preço" aria-label="preco" />
               </div>
               <div class="col-6">
                 <select id="categoria" class="form-select" aria-label="categoria">
                   <option selected>Categoria</option>
+                  <option>Casa</option>
                   <option>Limpeza</option>
-                  <option>Comida</option>
+                  <option>Alimento</option>
+                  <option>Eletrônico</option>
+                  <option>Contas</option>
                   <option>Lazer</option>
                   <option>Vestimenta</option>
+                  <option>Esporte</option>
+                  <option>Medicamento</option>
                 </select>
               </div>
             </div>
