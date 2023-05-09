@@ -28,10 +28,10 @@ function gerarCard(compra) {
       <div class="card-header">${compra.titulo}</div>
       <div class="card-body">
         <p class="card-text">${compra.descricao}</p>
-        <p class="card-text">${compra.data}</p>
+        <p class="card-text">Data da compra: ${compra.data ? compra.data : "Sem data"}</p>
         <p class="card-text">Preço R$${compra.preco && compra.preco > 0 ? compra.preco : 0}</span></p>
-        <p>
-          <span class="badge text-bg-info">${compra.parcelada != false && compra.parcelas > 1 ? compra.parcelas + " parcelas" : "Não parcelada"}</span>
+        <p class="card-text">
+          ${compra.parcelada != false && compra.parcelas > 1 ? compra.parcelas + " parcelas" : "Não parcelada"}
         </p>
         <p>
           <span class="badge text-bg-warning">${compra.categoria}</span>
