@@ -36,7 +36,7 @@
                   <hr class="dropdown-divider" />
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#exampleModal">Cadastrar</a>
+                  <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#cadastrarCompraModal" data-bs-dismiss="modal" >Cadastrar</a>
                 </li>
               </ul>
             </li>
@@ -51,7 +51,7 @@
     </nav>
 
     <div class="container">
-      <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModalLogin">Cadastrar Compra</button>
+      <button id="button-cadastrar" type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#realizarLoginModal">Cadastrar Compra</button>
     </div>
     
     <div class="container">
@@ -61,29 +61,29 @@
     <!-- Button trigger modal -->
 
     <!-- Modal Login -->
-    <div class="modal fade" id="exampleModalLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="realizarLoginModal" tabindex="-1" aria-labelledby="realizarLoginModal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Realize o login!</h1>
+            <h1 class="modal-title fs-5" id="realizarLoginModal">Realize o login!</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="row">
               <div class="mb-3">
-                <input id="titulo" type="mail" class="form-control" placeholder="E-mail" aria-label="E-mail" />
+                <input id="email" type="mail" class="form-control" placeholder="E-mail" aria-label="E-mail" />
               </div>
               <div class="mb-3">
-                <input id="descricao" type="password" class="form-control" placeholder="Senha" aria-label="Senha" />
+                <input id="senha" type="password" class="form-control" placeholder="Senha" aria-label="Senha" />
               </div>
               
               <!-- <button onclick="myFunction()" id="salvar" data-bs-dismiss="modal" type="button" class="btn btn-primary"> Salvar </button> -->
 
               <div style="display: flex; margin-top: 1rem;" class="mb-3">
-                <button onclick="toastFunctionLogin()" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary btn_acessar">Acessar</button>
+                <button onclick="toastFunctionLogin()" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#cadastrarCompraModal" type="button" class="btn btn-primary btn_acessar">Acessar</button>
               </div>
 
-              <p data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-dismiss="modal" class="acessar_sem"><a href="#!">Acessar sem login.</a></p>
+              <p data-bs-toggle="modal" data-bs-target="#cadastrarCompraModal" data-bs-dismiss="modal" class="acessar_sem"><a href="#!">Acessar sem login.</a></p>
             </div>
           </div>
         </div>
@@ -91,11 +91,11 @@
     </div>
     
     <!-- Modal Card -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cadastrarCompraModal" tabindex="-1" aria-labelledby="cadastrarCompraModal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel"> Cadastrar compra </h1>
+            <h1 class="modal-title fs-5" id="cadastrarCompraModal"> Cadastrar compra </h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -141,7 +141,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancelar </button>
-            <button onclick="toastFunction()" id="salvar" data-bs-dismiss="modal" type="button" class="btn btn-primary"> Salvar </button>
+            <button id="salvar" type="button" class="btn btn-primary"> Salvar </button>
           </div>
         </div>
       </div>

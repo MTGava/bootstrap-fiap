@@ -5,6 +5,7 @@ window.onload = function() {
 };
 
 function cadastrar() {
+    const modal = bootstrap.Modal.getInstance(document.querySelector("#cadastrarCompraModal"))
     let titulo = document.querySelector("#titulo").value
     let descricao = document.querySelector("#descricao").value
     let preco = document.querySelector("#preco").value
@@ -23,7 +24,21 @@ function cadastrar() {
         parcelas: parcelas
     }
 
+    if (compra.titulo.length == 0) {
+      document.querySelector("#titulo").classList.add("is-invalid")
+      return
+    }
+    
+    document.querySelector("#button-cadastrar").setAttribute("data-bs-target", "#cadastrarCompraModal")
+    toastFunction()
     document.querySelector("#compras").innerHTML += gerarCard(compra)
+
+    modal.hide()
+}
+
+
+function apagar(botao) {
+  botao.parentNode.parentNode.parentNode.remove()
 }
 
 function gerarCard(compra) {
@@ -43,7 +58,7 @@ function gerarCard(compra) {
         <a onclick="btnCheck()" class="btn btn-success">
           <i class="bi bi-check-lg"></i>
         </a>
-        <a onclick="btnTrash()" class="btn btn-danger">
+        <a onclick="apagar(this)" class="btn btn-danger">
           <i class="bi bi-trash"></i>
         </a>
       </div>
