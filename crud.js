@@ -1,5 +1,9 @@
 document.querySelector("#salvar").addEventListener("click", cadastrar)
 
+window.onload = function() {
+  console.log('start')
+};
+
 function cadastrar() {
     let titulo = document.querySelector("#titulo").value
     let descricao = document.querySelector("#descricao").value
@@ -36,10 +40,10 @@ function gerarCard(compra) {
         <p>
           <span class="badge text-bg-warning">${compra.categoria}</span>
         </p>
-        <a href="#" class="btn btn-success">
+        <a onclick="btnCheck()" class="btn btn-success">
           <i class="bi bi-check-lg"></i>
         </a>
-        <a href="#" class="btn btn-danger">
+        <a onclick="btnTrash()" class="btn btn-danger">
           <i class="bi bi-trash"></i>
         </a>
       </div>
@@ -67,3 +71,23 @@ document.querySelector('#parcelada').addEventListener('click',()=> {
     document.querySelector('#parcelas').removeAttribute("disabled")
   }
 })
+
+function toastFunction() {
+  var x = document.getElementById("toast_add");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+
+function toastFunctionLogin() {
+  var x = document.getElementById("toast_login");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+
+function btnCheck() {
+  console.log('check')
+}
+
+function btnTrash() {
+  console.log('trash')
+}
