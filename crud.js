@@ -1,8 +1,15 @@
 document.querySelector("#salvar").addEventListener("click", cadastrar)
 
-window.onload = function() {
-  console.log('start')
-};
+let lista_compra = []
+
+window.addEventListener("load", () => {
+    lista_compra = JSON.parse(localStorage.getItem("lista_compra"))
+    if (lista_compra != null) {
+      lista_compra.forEach((compra) => {
+        document.querySelector("#compras").innerHTML += gerarCard(compra)
+      });
+    }
+})
 
 function cadastrar() {
     const modal = bootstrap.Modal.getInstance(document.querySelector("#cadastrarCompraModal"))
@@ -33,11 +40,20 @@ function cadastrar() {
     toastFunction()
     document.querySelector("#compras").innerHTML += gerarCard(compra)
 
+    document.querySelector("#titulo").value = ""
+    //document.querySelector("#titulo").classList.remove("is-invalid")
+    document.querySelector("#descricao").value = ""
+
+    lista_compra.push(compra)
+
+    localStorage.setItem("lista_compra", JSON.stringify(lista_compra))
+
     modal.hide()
 }
 
 
 function apagar(botao) {
+  localStorage.removeItem("lista_compra")
   botao.parentNode.parentNode.parentNode.remove()
 }
 
