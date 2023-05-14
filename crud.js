@@ -2,7 +2,7 @@ document.querySelector("#salvar").addEventListener("click", cadastrar)
 
 let lista_compra = []
 
-window.addEventListener("load", () => {
+window.addEventListener("load", () => { 
     lista_compra = JSON.parse(localStorage.getItem("lista_compra"))
     if (lista_compra != null) {
       lista_compra.forEach((compra) => {
@@ -43,6 +43,11 @@ function cadastrar() {
     document.querySelector("#titulo").value = ""
     //document.querySelector("#titulo").classList.remove("is-invalid")
     document.querySelector("#descricao").value = ""
+
+
+    if (lista_compra == null) {
+      lista_compra = []
+    }
 
     lista_compra.push(compra)
 
