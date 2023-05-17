@@ -3,12 +3,26 @@ document.querySelector("#salvar").addEventListener("click", cadastrar)
 let lista_compra = []
 
 window.addEventListener("load", () => { 
-    lista_compra = JSON.parse(localStorage.getItem("lista_compra"))
-    if (lista_compra != null) {
-      lista_compra.forEach((compra) => {
-        document.querySelector("#compras").innerHTML += gerarCard(compra)
-      });
-    }
+    lista_compra = JSON.parse(localStorage.getItem("lista_compra")) || []
+    atualizar()
+  })
+  
+document.querySelector("#pendentes").addEventListener("click", () => {
+  lista_compra = lista_compra.filter(compra => !compra.paga)
+  atualizar()
+})
+  
+document.querySelector("#pagas").addEventListener("click", () => {
+  lista_compra = JSON.parse(localStorage.getItem("lista_compra")) || []
+  lista_compra = lista_compra.filter(compra => compra.paga)
+  atualizar()
+})
+
+document.querySelector("#busca").addEventListener("keyup", () => {
+  lista_compra = JSON.parse(localStorage.getItem("lista_compra")) || []
+  const titulo = document.querySelector("#busca").value
+  lista_compra = lista_compra.filter(compra => compra.titulo.includes(titulo))
+  atualizar()
 })
 
 function cadastrar() {
@@ -22,13 +36,15 @@ function cadastrar() {
     let parcelas = document.querySelector("#parcelas").value
 
     const compra = {
+        id: Date.now(),
         titulo: titulo,
         descricao: descricao,
         preco: preco,
         categoria: categoria,
         data: data,
         parcelada: parcelada,
-        parcelas: parcelas
+        parcelas: parcelas,
+        paga: false
     }
 
     if (compra.titulo.length == 0) {
@@ -44,22 +60,42 @@ function cadastrar() {
     //document.querySelector("#titulo").classList.remove("is-invalid")
     document.querySelector("#descricao").value = ""
 
-
-    if (lista_compra == null) {
-      lista_compra = []
-    }
-
     lista_compra.push(compra)
 
-    localStorage.setItem("lista_compra", JSON.stringify(lista_compra))
+    salvar()
 
     modal.hide()
+  }
+  
+  
+function salvar() {
+    localStorage.setItem("lista_compra", JSON.stringify(lista_compra))
+}
+
+function atualizar() {
+  document.querySelector("#compras").innerHTML = ""
+  lista_compra.forEach((compra) => {
+    document.querySelector("#compras").innerHTML += gerarCard(compra)
+  });
 }
 
 
-function apagar(botao) {
-  localStorage.removeItem("lista_compra")
-  botao.parentNode.parentNode.parentNode.remove()
+function apagar(id) {
+  lista_compra = lista_compra.filter((x) => {
+     return x.id != id
+  })
+  salvar()
+  atualizar() 
+}
+
+function pagar(id) {
+  let compra = lista_compra.find((x) => {
+    return x.id == id
+  })
+
+  compra.paga = true
+  salvar()
+  atualizar()
 }
 
 function gerarCard(compra) {
@@ -76,10 +112,10 @@ function gerarCard(compra) {
         <p>
           <span class="badge text-bg-warning">${compra.categoria}</span>
         </p>
-        <a onclick="btnCheck()" class="btn btn-success">
+        <a onclick="pagar(${compra.id})" class="btn btn-success ${compra.paga ? "disabled" : ""}">
           <i class="bi bi-check-lg"></i>
         </a>
-        <a onclick="apagar(this)" class="btn btn-danger">
+        <a onclick="apagar(${compra.id})" class="btn btn-danger">
           <i class="bi bi-trash"></i>
         </a>
       </div>

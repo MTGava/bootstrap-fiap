@@ -27,10 +27,10 @@
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Compras</a>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" href="#">Pendentes</a>
+                  <a id="pendentes" class="dropdown-item" href="#">Pendentes</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#">Realizadas</a>
+                  <a id="pagas" class="dropdown-item" href="#">Pagas</a>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
@@ -42,7 +42,7 @@
             </li>
           </ul>
           <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Digite algo..." aria-label="buscar" />
+            <input id="busca" class="form-control me-2" type="search" placeholder="Digite a compra..." aria-label="buscar" />
             <button class="btn btn-outline-success" type="submit"> Buscar </button>
           </form>
           <button class="btn btn-dark shadow ms-2" id="btnSwitch"><i class="bi bi-brightness-high-fill"></i></button>
