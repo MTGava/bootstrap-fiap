@@ -2,16 +2,16 @@ document.querySelector("#salvar").addEventListener("click", cadastrar)
 
 let lista_compra = []
 
-window.addEventListener("load", () => { 
-    lista_compra = JSON.parse(localStorage.getItem("lista_compra")) || []
-    atualizar()
-  })
-  
+window.addEventListener("load", () => {
+  lista_compra = JSON.parse(localStorage.getItem("lista_compra")) || []
+  atualizar()
+})
+
 document.querySelector("#pendentes").addEventListener("click", () => {
   lista_compra = lista_compra.filter(compra => !compra.paga)
   atualizar()
 })
-  
+
 document.querySelector("#pagas").addEventListener("click", () => {
   lista_compra = JSON.parse(localStorage.getItem("lista_compra")) || []
   lista_compra = lista_compra.filter(compra => compra.paga)
@@ -26,50 +26,75 @@ document.querySelector("#busca").addEventListener("keyup", () => {
 })
 
 function cadastrar() {
-    const modal = bootstrap.Modal.getInstance(document.querySelector("#cadastrarCompraModal"))
-    let titulo = document.querySelector("#titulo").value
-    let descricao = document.querySelector("#descricao").value
-    let preco = document.querySelector("#preco").value
-    let categoria = document.querySelector("#categoria").value
-    let data = document.querySelector("#data").value
-    let parcelada = document.querySelector("#parcelada").checked
-    let parcelas = document.querySelector("#parcelas").value
+  const modal = bootstrap.Modal.getInstance(document.querySelector("#cadastrarCompraModal"))
 
-    const compra = {
-        id: Date.now(),
-        titulo: titulo,
-        descricao: descricao,
-        preco: preco,
-        categoria: categoria,
-        data: data,
-        parcelada: parcelada,
-        parcelas: parcelas,
-        paga: false
-    }
+  let titulo = document.querySelector("#titulo").value
+  let descricao = document.querySelector("#descricao").value
+  let preco = document.querySelector("#preco").value
+  let categoria = document.querySelector("#categoria").value
+  let data = document.querySelector("#data").value
+  let parcelada = document.querySelector("#parcelada").checked
+  let parcelas = document.querySelector("#parcelas").value
 
+  const compra = {
+    id: Date.now(),
+    titulo: titulo,
+    descricao: descricao,
+    preco: preco,
+    categoria: categoria,
+    data: data,
+    parcelada: parcelada,
+    parcelas: parcelas,
+    paga: false
+  }
+
+  if (compra.titulo.length == 0 || compra.data.length == 0 || compra.preco.length == 0 || compra.categoria.length == 0) {
     if (compra.titulo.length == 0) {
       document.querySelector("#titulo").classList.add("is-invalid")
-      return
     }
-    
-    document.querySelector("#button-cadastrar").setAttribute("data-bs-target", "#cadastrarCompraModal")
-    toastFunction()
-    document.querySelector("#compras").innerHTML += gerarCard(compra)
 
-    document.querySelector("#titulo").value = ""
-    //document.querySelector("#titulo").classList.remove("is-invalid")
-    document.querySelector("#descricao").value = ""
+    if (compra.data.length == 0) {
+      document.querySelector("#data").classList.add("is-invalid")
+    }
 
-    lista_compra.push(compra)
+    if (compra.preco.length == 0) {
+      document.querySelector("#preco").classList.add("is-invalid")
+    }
 
-    salvar()
+    if (compra.categoria.length == 0) {
+      document.querySelector("#categoria").classList.add("is-invalid")
+    }
 
-    modal.hide()
+    toastFunctionErr()
+    return
   }
-  
-  
+
+  document.querySelector("#button-cadastrar").setAttribute("data-bs-target", "#cadastrarCompraModal")
+  toastFunction()
+  document.querySelector("#compras").innerHTML += gerarCard(compra)
+
+  document.querySelector("#titulo").value = ""
+  //document.querySelector("#titulo").classList.remove("is-invalid")
+  document.querySelector("#descricao").value = ""
+
+  lista_compra.push(compra)
+
+  salvar()
+  document.querySelector("#titulo").classList.remove("is-invalid")
+  document.querySelector("#data").classList.remove("is-invalid")
+  document.querySelector("#preco").classList.remove("is-invalid")
+
+  modal.hide()
+}
+
+function limpaLabel() {
+  document.querySelector("#titulo").classList.remove("is-invalid")
+  document.querySelector("#data").classList.remove("is-invalid")
+  document.querySelector("#preco").classList.remove("is-invalid")
+}
+
 function salvar() {
-    localStorage.setItem("lista_compra", JSON.stringify(lista_compra))
+  localStorage.setItem("lista_compra", JSON.stringify(lista_compra))
 }
 
 function atualizar() {
@@ -81,14 +106,23 @@ function atualizar() {
 
 
 function apagar(id) {
+  var x = document.getElementById("toast_del");
+  x.className = "show";
+  setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+
   lista_compra = lista_compra.filter((x) => {
-     return x.id != id
+    return x.id != id
   })
+
   salvar()
-  atualizar() 
+  atualizar()
 }
 
 function pagar(id) {
+  var x = document.getElementById("toast_success");
+  x.className = "show";
+  setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+
   let compra = lista_compra.find((x) => {
     return x.id == id
   })
@@ -99,7 +133,7 @@ function pagar(id) {
 }
 
 function gerarCard(compra) {
-    return `<div class="col-lg-3 col-md-6 col-12">
+  return `<div class="col-lg-3 col-md-6 col-12">
     <div class="card">
       <div class="card-header">${compra.titulo}</div>
       <div class="card-body">
@@ -123,22 +157,22 @@ function gerarCard(compra) {
   </div>`
 }
 
-document.querySelector('#btnSwitch').addEventListener('click',()=>{
-    if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        document.documentElement.setAttribute('data-bs-theme','light')
-        document.querySelector('#btnSwitch').innerHTML = '<i class="bi bi-moon-fill"></i>'
+document.querySelector('#btnSwitch').addEventListener('click', () => {
+  if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+    document.documentElement.setAttribute('data-bs-theme', 'light')
+    document.querySelector('#btnSwitch').innerHTML = '<i class="bi bi-moon-fill"></i>'
 
-    }
-    else {
-        document.documentElement.setAttribute('data-bs-theme','dark')
-        document.querySelector('#btnSwitch').innerHTML = '<i class="bi bi-brightness-high-fill"></i>'
-    }
+  }
+  else {
+    document.documentElement.setAttribute('data-bs-theme', 'dark')
+    document.querySelector('#btnSwitch').innerHTML = '<i class="bi bi-brightness-high-fill"></i>'
+  }
 })
 
 
-document.querySelector('#parcelada').addEventListener('click',()=> {
+document.querySelector('#parcelada').addEventListener('click', () => {
   if (document.querySelector('#parcelada').checked == false) {
-    document.querySelector('#parcelas').setAttribute("disabled","disabled")
+    document.querySelector('#parcelas').setAttribute("disabled", "disabled")
   } else {
     document.querySelector('#parcelas').removeAttribute("disabled")
   }
@@ -147,19 +181,21 @@ document.querySelector('#parcelada').addEventListener('click',()=> {
 function toastFunction() {
   var x = document.getElementById("toast_add");
   x.className = "show";
-  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+  setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
 }
 
 function toastFunctionLogin() {
   var x = document.getElementById("toast_login");
   x.className = "show";
-  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+  setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+}
+
+function toastFunctionErr() {
+  var x = document.getElementById("toast_err");
+  x.className = "show";
+  setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
 }
 
 function btnCheck() {
   console.log('check')
-}
-
-function btnTrash() {
-  console.log('trash')
 }
